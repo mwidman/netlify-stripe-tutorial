@@ -132,7 +132,7 @@
   container.appendChild(b2);
 };
 
-const loadSubscriptionContent = (user) => {
+const loadSubscriptionContent = async (user) => {
   const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
 
   ['free', 'pro', 'premium'].forEach((type) => {
