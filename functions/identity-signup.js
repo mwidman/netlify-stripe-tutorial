@@ -14,26 +14,34 @@ exports.handler = async (event) => {
   });
 
   // store the Netlify and Stripe IDs in Fauna
-  await faunaFetch({
-    query: `
-      mutation ($netlifyID: ID!, $stripeID: ID!) {
-        createUser(data: { netlifyID: $netlifyID, stripeID: $stripeID }) {
-          netlifyID
-          stripeID
+  let errData;
+  try
+  {
+    await faunaFetch({
+      query: `
+        mutation ($netlifyID: ID!, $stripeID: ID!) {
+          createUser(data: { netlifyID: $netlifyID, stripeID: $stripeID }) {
+            netlifyID
+            stripeID
+          }
         }
-      }
-    `,
-    variables: {
-      netlifyID: user.id,
-      stripeID: customer.id,
-    },
-  });
+      `,
+      variables: {
+        netlifyID: user.id,
+        stripeID: customer.id,
+      },
+    });
+  }
+  catch (err) {
+    errData = err.message;
+  }
 
   return {
     statusCode: 200,
     body: JSON.stringify({
       app_metadata: {
         roles: ['free'],
+        errors: errData,
       },
     }),
   };
