@@ -14,6 +14,7 @@ exports.handler = async (event) => {
   });
 
   // store the Netlify and Stripe IDs in Fauna
+  /*
   let errData;
   try
   {
@@ -35,13 +36,13 @@ exports.handler = async (event) => {
   catch (err) {
     errData = err.message;
   }
+  */
 
   return {
     statusCode: 200,
     body: JSON.stringify({
       app_metadata: {
-        roles: ['free'],
-        errors: errData,
+        roles: ['free']
       },
     }),
   };
