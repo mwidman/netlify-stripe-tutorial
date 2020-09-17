@@ -1,0 +1,5 @@
+type User {
+    ntelifyID: ID!
+    stripID: ID!
+}
+
